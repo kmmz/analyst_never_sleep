@@ -23,7 +23,7 @@ A full investment research toolkit with 5 skills:
 In Claude Cowork or Claude Code, run:
 
 ```
-/plugin marketplace add https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
+/plugin marketplace add https://github.com/kmmz/analyst_never_sleep
 ```
 
 ### Step 2 — Install the plugin
