@@ -1,0 +1,15 @@
+{
+  "name": "effy-plugins",
+  "description": "Investment research plugins by Effy — equity & macro tools for Cowork.",
+  "author": {
+    "name": "Effy"
+  },
+  "plugins": [
+    {
+      "name": "investment-analyst",
+      "description": "A full investment research toolkit — company deep dives, daily market briefings, earnings prep, investment memos, and watchlist management.",
+      "version": "0.1.0",
+      "source": "./investment-analyst"
+    }
+  ]
+}

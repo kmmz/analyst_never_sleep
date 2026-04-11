@@ -1,0 +1,9 @@
+{
+  "name": "investment-analyst",
+  "version": "0.1.0",
+  "description": "A full investment research toolkit — company deep dives, daily market briefings, earnings prep, investment memos, and watchlist management.",
+  "author": {
+    "name": "Effy"
+  },
+  "keywords": ["finance", "investing", "equity", "macro", "research", "analyst"]
+}
