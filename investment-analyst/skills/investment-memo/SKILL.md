@@ -5,61 +5,93 @@ description: >
   Use this skill when the user wants to write up their investment thesis as a
   structured document — "write an investment memo on X", "draft a one-pager for X",
   "help me write up my thesis on X", "I want to present my idea on X", or similar.
-  Also trigger when preparing for a portfolio review, an investment committee
-  presentation, or when the user has done their research and wants to crystallize
-  it into a shareable document.
+  Also trigger when preparing for a portfolio review, an investment committee presentation,
+  or when the user has done their research and wants to crystallize it into a shareable document.
 metadata:
   version: "0.2.0"
 ---
 
 # Investment Memo
 
-Produce a formal investment memo that could be shared in a portfolio review, investment committee, or with a collaborator.
+Transform research and analysis into a structured investment memo or one-pager.
+
+## When to use
+
+This skill is for when the analyst has already done the research (or has a view) and needs to write it up. If they're still in the discovery phase, use the `company-deep-dive` skill first.
 
 ## Before Writing
 
-1. Check the workspace for `schemas/research_schemas.md` — use the **Investment Memo** template as the canonical output format.
+1. Check the workspace for `schemas/research_schemas.md` — use the **Investment Memo** template as the canonical output format if it exists.
 2. Check `knowledge-base/companies/[TICKER].md` for prior research on this name. If a deep dive exists, use it as source material — do not repeat research already done.
 3. Check `watchlist.json` — if the ticker is on the watchlist, read the thesis, level, and any target/stop prices. Incorporate these into the memo's sizing and exit criteria sections.
 
-## Gather Context First
+## Workflow
 
-Before writing, confirm (if not already clear from conversation):
-1. The company / ticker / asset
-2. Long or short
-3. Target holding period (tactical / position / long-term hold)
-4. Any constraints — portfolio mandate, risk limits, sizing context
-5. Key pieces of the thesis the user already has in mind
+### 1. Gather inputs
+Ask for (or infer from context):
+- Company / ticker
+- Thesis summary (what's the core idea?)
+- Time horizon (trade vs. long-term hold)
+- Any research they've already done (paste or reference)
+- Audience (internal IC, external LP, personal notes)
 
-If the user has already shared research in the conversation, use it. Do not ask for information already provided.
+### 2. Write the memo
 
-## Memo Structure
+Follow the **Investment Memo** schema from `schemas/research_schemas.md`. Key sections:
 
-Follow the **Investment Memo** schema in `schemas/research_schemas.md`. Key sections:
+```
+# Investment Memo: [Company Name] ([TICKER])
+**Date:** [Date]  
+**Analyst:** [Name if provided]  
+**Recommendation:** [Buy / Sell / Hold / Initiate]  
+**Price Target:** $X ([N]% upside/downside)  
+**Time Horizon:** [e.g., 12 months]  
+**Position Size:** [e.g., 2–3% of portfolio — if relevant]
 
-**Header Block** — company, ticker, sector, direction, market cap, current price, date, and author.
+---
 
-**Executive Summary** — two to three sentences. The whole pitch in a paragraph. State the thesis in plain language: what is the market missing, and why does that create an opportunity?
+## Executive Summary
+[3–4 sentences: what's the opportunity, why does it exist, what's the thesis in plain English.]
 
-**Investment Thesis** — three to four numbered reasons, each grounded in specific data. Include: *Why Does This Opportunity Exist?* — what is the market missing or mispricing?
+## Company Overview
+[2–3 sentences: what they do, key metrics, market position. Reader should orient quickly.]
 
-**Financials & Valuation** — key metrics plus the math behind the price target or return expectation. Show your work.
+## Investment Thesis
+[The core argument. 3–5 specific reasons this is an opportunity. Each reason should be:
+- Grounded in a data point or observable fact
+- Differentiated from consensus (why does the market have it wrong?)
+- Testable (what would prove or disprove this?)]
 
-**Catalysts** — specific events or data points that will close the gap, with expected timing.
+### Why Does This Opportunity Exist?
+[What is the market missing? Misunderstood growth, overlooked catalyst, sentiment overshoot, structural change not yet priced?]
 
-**Key Risks** — three to four honest risks, each with: what it is, estimated probability, and downside impact. Do not downplay risks.
+## Financials & Valuation
+[Key financial metrics table + valuation. Include target multiple and how you get to the price target.]
 
-**Exit Criteria** — two entries: (1) Stop: the condition that means the thesis is wrong and the position should be cut; (2) Target: the condition that means the thesis has played out and it's time to take profit.
+## Catalysts
+[What will close the gap between current price and target? Include timing where possible.]
+
+## Key Risks
+[3–5 specific risks. For each: what's the risk, how likely, what's the downside scenario?]
+
+## Variant View
+[What does the market think? How is this thesis different? Why are you right and the market is wrong (or early)?]
+
+## Exit Criteria
+**Stop:** [The condition that means the thesis is wrong — cut the position]  
+**Target:** [The condition that means the thesis has played out — take profit]
+```
+
+### 3. Tone
+
+- Write for a skeptical, intelligent reader who hasn't followed this name
+- Every claim should be backed by a number or fact
+- Avoid buzzwords ("innovative", "disruptive") — say specifically what makes them good
+- Be direct: "Buy at $X, target $Y, stop at $Z"
+- Length: one to two pages when printed. Be disciplined.
 
 ## After Writing
 
-Save the memo to `knowledge-base/theses/[TICKER]_investment_memo_YYYY-MM-DD.md` in the workspace.
+Save to `knowledge-base/theses/[TICKER]_investment_memo_YYYY-MM-DD.md` in the workspace.
 
 If the ticker is not already on the watchlist, offer to add it with the thesis summary and relevant price levels from the memo.
-
-## Style Guidelines
-
-- Confident, direct, and evidence-based — every claim grounded in a specific data point
-- Avoid jargon without explanation — readable by a sophisticated non-expert
-- Length: one to two pages when printed. Be disciplined.
-- For a shorter one-pager: compress to Executive Summary, Investment Thesis, Key Risks, and Exit Criteria only

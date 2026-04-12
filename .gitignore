@@ -1,0 +1,19 @@
+# Secrets & credentials
+telegram_config.json
+*.env
+.env.*
+*_config.json
+secrets/
+credentials/
+
+# Personal workspace data
+watchlist.json
+watchlist.md
+outputs/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc

@@ -2,72 +2,152 @@
 name: earnings-prep
 description: >
   Prepare for an upcoming earnings event or analyze a just-released earnings report.
-  Use this skill whenever the user mentions earnings — "earnings prep for X",
-  "X reports this week", "help me prepare for [company] earnings", "what should I
-  watch in X's earnings", "X just reported, what happened?", "analyze X's Q[N]
-  results", "post-earnings on X", or any variation. Also trigger if the user asks
-  for a question list for an earnings call, wants to build a pre-earnings
-  expectations framework, or wants to understand what the market is pricing in
-  ahead of results.
+  Use this skill whenever the user mentions earnings — "earnings prep for X", "X reports
+  this week", "help me prepare for [company] earnings", "what should I watch in X's
+  earnings", "X just reported, what happened?", "analyze X's Q[N] results", "post-earnings
+  on X", or any variation. Also trigger if the user asks for a question list for an
+  earnings call, wants to build a pre-earnings expectations framework, or wants to
+  understand what the market is pricing in ahead of results.
 metadata:
   version: "0.2.0"
 ---
 
-# Earnings Prep & Recap
+# Earnings Prep
 
-Produce an analyst-grade earnings briefing — either pre-earnings (what to expect) or post-earnings (what happened and what it means).
-
-Determine from context whether this is **pre-earnings prep** or a **post-earnings recap**, and use the appropriate structure.
+Help the analyst prepare for or analyze an earnings event. There are two modes — pre-earnings (prepare) and post-earnings (analyze). Detect which one the user needs, or ask if unclear.
 
 ## Before Writing
 
 1. Check the workspace for `schemas/research_schemas.md` — use the **Earnings Preview** or **Earnings Recap** template as the canonical output format.
-2. Check `watchlist.json` — if the ticker is on the watchlist, read the current thesis and any prior notes before writing. The earnings assessment should explicitly address whether the print supports or challenges the thesis.
+2. Check `watchlist.json` — if the ticker is on the watchlist, read the current thesis and any prior notes. The earnings assessment should explicitly address whether the print supports or challenges the thesis.
 3. Check `knowledge-base/companies/[TICKER].md` for prior deep dive notes and `knowledge-base/earnings/` for prior earnings files on this name.
 
 ---
 
-## Pre-Earnings Prep
+## Mode A: Pre-Earnings Prep
 
-Use when the user wants to prepare before results are released.
+Produce an expectations framework before the earnings release.
+
+### Step 1: Gather context
+- Company / ticker (required)
+- Earnings date (look it up if not provided)
+- User's current thesis or position (ask or pull from memory)
+- Key questions they're going in with (optional)
+
+### Step 2: Research — run in parallel
+
+**Consensus expectations:**
+- What is Wall Street expecting? EPS estimate, revenue estimate, key metrics
+- Web search: `"[ticker] earnings estimates consensus Q[N] [year]"`
+- If MCPs available: Bigdata (`bigdata_events_calendar`), Aiera (`get_event`, `get_equity_summaries`), Quartr (`list_events`, `get_event`)
+
+**Recent company narrative:**
+- What did management guide to last quarter?
+- What are the 2–3 metrics management has flagged as most important?
+- Web search: `"[company] last quarter guidance [recent date]"` or last earnings transcript
+
+**What's priced in:**
+- How has the stock moved into earnings? (vs. sector, vs. market)
+- Implied move from options (if findable)
+- Web search: `"[ticker] options implied move earnings"`
+
+**Key debates:**
+- What are the 2–3 things the market is most divided on?
+- What would constitute a "beat" vs. "miss" in terms of market reaction (not just EPS)?
+
+### Step 3: Write the pre-earnings brief
 
 Follow the **Earnings Preview** schema from `schemas/research_schemas.md`. Key sections:
 
-**The Setup** — report date, time (AMC/BMO), current consensus estimates for revenue, EPS, and any company-specific KPIs, plus what guidance the company gave last quarter.
+```
+# [Company] ([TICKER]) — Earnings Preview
+*[Quarter / Fiscal Period] | Earnings Date: [Date] | Current Price: $X*
 
-**What the Market Is Pricing In** — implied move from options (use market data MCP if available), how the stock has traded into earnings, current sentiment positioning.
+## The Setup
+[2–3 sentences: what's the narrative going in? Is this a "show me" quarter, a recovery story, a guide-up event?]
 
-**Key Questions for the Call** — five to seven specific, pointed questions this earnings call needs to answer for the thesis. Not generic ("how was revenue?") but precise ("did North America revenue growth reaccelerate above the 8% implied by management's Q3 guide?").
+## Consensus Expectations
+| Metric | Consensus Est. | Prior Quarter Actual | YoY Change |
+|--------|---------------|----------------------|------------|
+| Revenue ($M) | | | |
+| EPS | | | |
+| [Key Metric 1] | | | |
+| [Key Metric 2] | | | |
 
-**Consensus Expectations Table** — revenue, EPS, key KPIs with consensus, prior quarter, and YoY comparison.
+## What Management Guided To
+[Bullet points from last quarter's guidance. Note any specific numbers or ranges.]
 
-**Scenario Framework** — beat & raise / in-line / miss scenarios with expected stock reaction for each.
+## The Key Questions
+[5–7 questions the analyst should have answered by end of call. Ordered by importance. Each question should be specific and testable.]
 
-**My Going-In View** — pre-print thesis and where the user's expectations sit vs. consensus.
+1. 
+2. 
+3. 
+...
+
+## Scenario Framework
+| Scenario | Condition | Expected Reaction |
+|----------|-----------|-------------------|
+| Beat & raise | Rev >X%, guide >Y | +5–8% |
+| In-line | Meets estimates, guide flat | Flat to ±2% |
+| Miss or guide down | Rev <X% or cuts guide | -8–12% |
+
+[Adjust numbers to the specific situation.]
+
+## My Going-In View
+[Space for the analyst to record their thesis before the print — what do they think will happen vs. consensus?]
+```
 
 ---
 
-## Post-Earnings Recap
+## Mode B: Post-Earnings Analysis
 
-Use when results have already been reported.
+Rapidly synthesize what actually happened vs. what was expected.
+
+### Step 1: Gather the results
+- Pull actual results from web search: `"[ticker] Q[N] earnings results [date]"`
+- If MCPs available: Quartr or Aiera for transcript/document access
+
+### Step 2: Write the post-earnings summary
 
 Follow the **Earnings Recap** schema from `schemas/research_schemas.md`. Key sections:
 
-**The Print** — reported vs. consensus table: revenue, EPS, key KPIs. Beat/miss/in-line at a glance.
+```
+# [Company] ([TICKER]) — Earnings Recap
+*[Quarter] | Reported: [Date] | Stock reaction: [+/-X%]*
 
-**Guidance** — next quarter and full year guidance vs. prior, and vs. what the Street expected.
+## The Print vs. Expectations
+| Metric | Actual | Consensus | Beat/Miss |
+|--------|--------|-----------|-----------|
+| Revenue ($M) | | | |
+| EPS | | | |
+| [Key Metric 1] | | | |
+| [Key Metric 2] | | | |
 
-**Key Call Takeaways** — most important commentary from prepared remarks and Q&A. What did they avoid or deflect?
+## Guidance
+[What did management guide for next quarter / full year? Any changes vs. prior guide?]
 
-**Why the Stock Moved** — one to two sentences on the actual driver of the reaction (not just the headline number).
+## Key Takeaways from the Call
+[3–5 bullets. Focus on what was new, changed, or surprising — not what was expected.]
 
-**Thesis Update** — explicitly state: does this print strengthen, weaken, or leave unchanged the investment thesis? Flag which assumptions need revision.
+## Why the Stock Moved
+[One to two sentences on the actual driver of the reaction — guidance and narrative delta matter more than headline numbers.]
+
+## Thesis Update
+[Explicitly state: does this print strengthen, weaken, or leave unchanged the investment thesis? Flag which assumptions need revision.]
+```
 
 ---
 
+## General guidance
+
+- Always distinguish between an EPS/revenue "beat" and what actually drove stock movement — the market reacts to guidance and the delta in the narrative, not just the headline
+- Flag any discrepancies between GAAP and non-GAAP metrics prominently
+- If the call transcript is available (via MCPs), pull 2–3 verbatim management quotes on the most important topics
+
 ## After Writing
 
-Save to `knowledge-base/earnings/` using the naming convention from the schema:
+Save to `knowledge-base/earnings/` using the naming convention:
 - Pre-earnings: `[TICKER]_earnings_pre_YYYY-MM-DD.md`
 - Post-earnings: `[TICKER]_earnings_post_YYYY-MM-DD.md`
 
