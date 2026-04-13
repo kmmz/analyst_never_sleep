@@ -4,6 +4,35 @@ A full investment research toolkit for Cowork. Covers the core workflows of an e
 
 ---
 
+## First-Time Setup
+
+Before using the skills, complete this one-time setup so event times and calendars display in your local timezone.
+
+### Set your timezone
+
+Tell Claude your timezone once and it will be saved to `preferences.json` in your workspace:
+
+> *"Set my timezone to [your timezone, e.g. Asia/Singapore, Europe/London, America/New_York]"*
+
+Claude will update `preferences.json` automatically. After that, all earnings call times, macro data releases, and Fed speaker schedules in your briefings and earnings prep will show in your local time alongside ET.
+
+**Common timezone examples:**
+
+| Region | Timezone string |
+|---|---|
+| US Eastern | `America/New_York` |
+| US Pacific | `America/Los_Angeles` |
+| UK / Ireland | `Europe/London` |
+| Central Europe | `Europe/Berlin` |
+| Singapore / Malaysia | `Asia/Singapore` |
+| Hong Kong | `Asia/Hong_Kong` |
+| Tokyo | `Asia/Tokyo` |
+| Sydney | `Australia/Sydney` |
+
+Use the full IANA timezone string (e.g. `Asia/Singapore`, not `SGT`) to ensure daylight saving time is handled correctly.
+
+---
+
 ## Skills
 
 | Skill | What it does | How to trigger |

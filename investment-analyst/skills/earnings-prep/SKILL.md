@@ -21,6 +21,7 @@ Help the analyst prepare for or analyze an earnings event. There are two modes �
 1. Check the workspace for `schemas/research_schemas.md` — use the **Earnings Preview** or **Earnings Recap** template as the canonical output format.
 2. Check `watchlist.json` — if the ticker is on the watchlist, read the current thesis and any prior notes. The earnings assessment should explicitly address whether the print supports or challenges the thesis.
 3. Check `knowledge-base/companies/[TICKER].md` for prior deep dive notes and `knowledge-base/earnings/` for prior earnings files on this name.
+4. **Read `preferences.json`** in the workspace. If `timezone` is set (e.g. `"Asia/Singapore"`), convert the earnings call time and all event times to local time. Display as `HH:MM ET / HH:MM [TZ_ABBR]` wherever a time appears. If `timezone` is null or the file doesn't exist, use ET only and include a one-line note: *"💡 Set your timezone in preferences.json to see times in local time."*
 
 ---
 
@@ -61,7 +62,7 @@ Follow the **Earnings Preview** schema from `schemas/research_schemas.md`. Key s
 
 ```
 # [Company] ([TICKER]) — Earnings Preview
-*[Quarter / Fiscal Period] | Earnings Date: [Date] | Current Price: $X*
+*[Quarter / Fiscal Period] | Earnings Date: [Date] [Time ET / Time LOCAL if timezone set] | Current Price: $X*
 
 ## The Setup
 [2–3 sentences: what's the narrative going in? Is this a "show me" quarter, a recovery story, a guide-up event?]

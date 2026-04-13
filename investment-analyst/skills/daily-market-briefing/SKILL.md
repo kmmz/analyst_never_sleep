@@ -19,7 +19,8 @@ Produce a concise, structured morning market briefing for an equity and macro an
 
 1. Check the workspace for `schemas/research_schemas.md` — use the **Daily Market Briefing** template as the canonical output format if it exists.
 2. Check `watchlist.json` in the workspace. After the general market section, add a **Watchlist Pulse** covering any notable moves, news, or catalysts for Level 1 tickers specifically.
-3. Check `knowledge-base/market-notes/` for recent prior briefings — use them for continuity on themes already in play.
+3. Check `daily-summaries/` in the workspace for recent prior briefings — use them for continuity on themes already in play.
+4. **Read `preferences.json`** in the workspace. If `timezone` is set (e.g. `"Asia/Singapore"`), use it to convert all event times in the briefing to local time. Show times as `HH:MM ET / HH:MM [TZ_ABBR]`. If `timezone` is null or the file doesn't exist, default to ET only and add a one-line prompt at the top of the briefing: *"💡 Tip: tell me your timezone once and I'll show all times in local time going forward."*
 
 ## Workflow
 
@@ -58,7 +59,7 @@ Use this exact structure:
 [3–5 bullet points. Cover: index direction, rates, USD, key commodity. One line each. Lead with the number, then the implication.]
 
 ## 📅 What to Watch Today
-[Scheduled catalysts: data releases, Fed/central bank events, major earnings. Time + brief note on expected impact.]
+[Scheduled catalysts: data releases, Fed/central bank events, major earnings. Show times as "HH:MM ET / HH:MM LOCAL" if timezone is set in preferences.json, otherwise ET only. Brief note on expected impact for each.]
 
 ## 🔥 Equity Movers
 [Top 5–7 pre-market movers. Ticker + move + one-line reason. Flag if it's sector-wide vs. company-specific.]
@@ -83,4 +84,4 @@ Use this exact structure:
 
 ## After Writing
 
-Save to `knowledge-base/market-notes/briefing_[YYYY-MM-DD].md` in the workspace. If the folder doesn't exist yet, save as `briefing_[YYYY-MM-DD].md` at the workspace root.
+Save to `daily-summaries/briefing_[YYYY-MM-DD].md` in the workspace. The `daily-summaries/` folder is the canonical home for all daily briefings — do not save to the workspace root or `outputs/` folder.
