@@ -8,7 +8,7 @@
     {
       "name": "investment-analyst",
       "description": "A full investment research toolkit — company deep dives, daily market briefings, earnings prep, investment memos, and watchlist management.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./investment-analyst"
     }
   ]
